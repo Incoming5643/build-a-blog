@@ -74,7 +74,10 @@ class NewPostPage(Handler):
 class ViewPost(Handler):
 	def get(self, id):
 		entry = Art.get_by_id(int(id))
-		self.render("singleblog.html", title=entry.title, art=entry.art)
+		if(not entry):
+			self.render("404.html", error="That entry does not exist")
+		else:
+			self.render("singleblog.html", title=entry.title, art=entry.art)
 
 app = webapp2.WSGIApplication([
     ('/', FrontPage),
